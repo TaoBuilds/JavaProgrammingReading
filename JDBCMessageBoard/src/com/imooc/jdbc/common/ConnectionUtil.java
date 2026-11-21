@@ -13,11 +13,9 @@ import java.sql.Statement;
  */
 public final class ConnectionUtil {
 
-    private static String url = "jdbc:mysql://localhost:3306/message_board";
+    private static final String url = System.getenv().getOrDefault("JDBC_URL", "jdbc:mysql://localhost:3306/message_board");
 
-    private static String user = "root";
-
-    private static String password = "102985";
+    private static final String user = System.getenv().getOrDefault("JDBC_USER", "root");
 
     private ConnectionUtil() {}
 
@@ -35,6 +33,10 @@ public final class ConnectionUtil {
      * @return
      */
     public static Connection getConnection() {
+        String password = System.getenv("JDBC_PASSWORD");
+        if (password == null || password.trim().isEmpty()) {
+            throw new IllegalStateException("JDBC_PASSWORD environment variable must be set.");
+        }
         try {
             return DriverManager.getConnection(url, user, password);
         } catch (SQLException e) {
