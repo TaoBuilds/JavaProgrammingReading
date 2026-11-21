@@ -1,0 +1,15 @@
+# Do not commit local IDE machine settings or compiled output.
+.idea/
+*.iml
+.settings/
+.classpath
+.project
+bin/
+out/
+target/
+*.class
+*.jar
+.env
+.env.*
+*.log
+.DS_Store
